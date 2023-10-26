@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   reducerPath: "newsApireducer",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5070/api/",
+    baseUrl: "http://84.38.182.126:5070/api/",
   }),
   endpoints: (builder) => ({
     getPosts: builder.query({
