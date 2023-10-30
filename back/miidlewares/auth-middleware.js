@@ -1,3 +1,6 @@
+const ApiError = require('../exceptions/api-error');
+const tokenService = require('../service/token-service');
+
 /**
  * Middleware для аутентификации пользователей по токену доступа.
  * @param {Request} req - Запрос Express.

@@ -23,7 +23,8 @@ router.get("/news/:id", newsController.getNewsId);
 router.post("/newsEdit", newsController.updateNews);
 router.post("/createnews", authMiddleware, newsController.createNews);
 // router.post("/createnews", newsController.createNews);
-router.patch("/updatenews/:id", authMiddleware, newsController.updateNews);
+// router.patch("/updatenews/:id", authMiddleware, newsController.updateNewsContent);
+router.post("/updatenews", newsController.updateNewsContent);
 router.delete("/news/:id", newsController.deleteNews);
 
 module.exports = router;

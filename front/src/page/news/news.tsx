@@ -24,7 +24,7 @@ function News() {
               {post.title}
               <div className={s.title}>
                 <li>{post.title}</li>
-                {post.photo && <img src={HOST + post.photo} />}
+                {post.photo && <img src={HOST + 'uploads/' + post.photo} />}
               </div>
               <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
             </Link>

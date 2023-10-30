@@ -1,13 +1,38 @@
 import { useSelector } from "react-redux";
-import { useGetPostEditMutation } from "../../store/api";
-import { FC, FormEvent } from "react";
+import {
+  useGetPostEditContentMutation,
+  useGetPostEditMutation,
+  useGetPostIdQuery,
+} from "../../store/api";
+import { FC, FormEvent, useEffect, useState } from "react";
 import s from "./editNews.module.scss";
 import { Link } from "react-router-dom";
+import ReactQuill from "react-quill";
 
 const EditNews: FC = ({}) => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const newsId = window.location.pathname.split("/")[2];
+
+  useEffect(() => {
+    setTitle(newsContent?.title);
+    setContent(newsContent?.content);
+  }, [newsId]);
+
+  const {
+    data: newsContent = {},
+    error,
+    isLoading,
+  } = useGetPostIdQuery(newsId);
+
   const id = useSelector((state: any) => state.auth.id);
   const [getPostEdit] = useGetPostEditMutation();
+  const [getPostEditContent] = useGetPostEditContentMutation();
+
+  const changeContent = async () => {
+    console.log(newsId, 'newsId')
+    await getPostEditContent({ post_id: newsId, title, content }).unwrap();
+  };
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,6 +48,10 @@ const EditNews: FC = ({}) => {
     }
   };
 
+  const handleTextChange = (value: any) => {
+    setContent(value);
+  };
+
   return (
     <>
       <Link to="/news">перейти к новостям</Link>
@@ -34,6 +63,22 @@ const EditNews: FC = ({}) => {
           <button type="submit">добавить фото</button>
         </form>
       </div>
+      <br />
+      <div>
+        {/* <input type="text" value={newsContent.title}/> */}
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <ReactQuill
+          // value={newsContent.content}
+          value={content}
+          onChange={handleTextChange}
+          className="h-[300px]"
+        />
+      </div>
+        <button onClick={changeContent} className='mt-[90px]'>поменять тело и заголовок</button>
     </>
   );
 };

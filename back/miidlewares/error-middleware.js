@@ -1,3 +1,6 @@
+const ApiError = require('../exceptions/api-error');
+const tokenService = require('../service/token-service');
+
 /**
  * Middleware для обработки ошибок.
  * @param {Error} err - Объект ошибки.

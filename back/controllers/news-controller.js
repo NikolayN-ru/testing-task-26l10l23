@@ -46,6 +46,7 @@ class NewsController {
    * Создает новость.
    */
   async createNews(req, res, next) {
+    // console.log(req, 'req')
     const author = req.user.id;
     try {
       const { title, content, photo, availableDate } = req.body;
@@ -73,15 +74,16 @@ class NewsController {
   /**
    * Обновляет новость.
    */
-  async updateNews(req, res, next) {
+  async updateNewsContent(req, res, next) {
     try {
-      const newsId = req.params.id;
+      // console.log(req.body, 'req_body')
+      const newsId = req.body.post_id;
       const news = await newsShema.findById(newsId);
-      if (news.author.toString() !== req.user.id) {
-        return res.json({
-          message: "У вас нет прав на редактирование этой новости",
-        });
-      }
+      // if (news.author.toString() !== req.user.id) {
+      //   return res.json({
+      //     message: "У вас нет прав на редактирование этой новости",
+      //   });
+      // }
 
       news.title = req.body.title;
       news.content = req.body.content;
